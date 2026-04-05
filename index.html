@@ -1,0 +1,1058 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Aulas particulares de inglês com Vinicius — personalizado, prático e com propósito. Comece agora." />
+  <title>Vinicius | Professor de Inglês</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ─── RESET & BASE ──────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --primary:    #0F172A;
+      --secondary:  #1E3A5F;
+      --accent:     #22C55E;
+      --accent-dim: #16A34A;
+      --bg:         #FFFFFF;
+      --surface:    #F8FAFC;
+      --border:     #E2E8F0;
+      --muted:      #64748B;
+      --text:       #0F172A;
+
+      --radius-card: 22px;
+      --radius-btn:  14px;
+      --shadow-card: 0 2px 24px rgba(15, 23, 42, 0.08);
+      --shadow-btn:  0 4px 24px rgba(34, 197, 94, 0.32);
+
+      --font-head: 'Sora', sans-serif;
+      --font-body: 'Inter', sans-serif;
+
+      --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--font-body);
+      background: var(--bg);
+      color: var(--text);
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    img { display: block; max-width: 100%; }
+    a { text-decoration: none; color: inherit; }
+
+    /* ─── CONTAINER ─────────────────────────────────────────── */
+    .container {
+      width: 100%;
+      max-width: 1140px;
+      margin-inline: auto;
+      padding-inline: 32px;
+    }
+
+    /* ════════════════════════════════════════════════════════
+       ANIMAÇÕES DE ENTRADA
+    ════════════════════════════════════════════════════════ */
+
+    /* fade-up padrão */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(40px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* fade lateral (da esquerda) */
+    @keyframes fadeLeft {
+      from { opacity: 0; transform: translateX(-30px); }
+      to   { opacity: 1; transform: translateX(0); }
+    }
+
+    /* scale suave */
+    @keyframes scalePop {
+      from { opacity: 0; transform: scale(0.93); }
+      to   { opacity: 1; transform: scale(1); }
+    }
+
+    /* linha crescendo */
+    @keyframes growLine {
+      from { width: 0; opacity: 0; }
+      to   { width: 40px; opacity: 1; }
+    }
+
+    /* pulse no glow */
+    @keyframes glowPulse {
+      0%, 100% { opacity: 0.7; }
+      50%       { opacity: 1; }
+    }
+
+    /* reveal via IntersectionObserver */
+    .reveal {
+      opacity: 0;
+      transform: translateY(36px);
+      transition: opacity 0.7s var(--ease-out), transform 0.7s var(--ease-out);
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    .reveal-left {
+      opacity: 0;
+      transform: translateX(-28px);
+      transition: opacity 0.65s var(--ease-out), transform 0.65s var(--ease-out);
+    }
+    .reveal-left.visible { opacity: 1; transform: translateX(0); }
+
+    .reveal-scale {
+      opacity: 0;
+      transform: scale(0.94);
+      transition: opacity 0.6s var(--ease-out), transform 0.6s var(--ease-out);
+    }
+    .reveal-scale.visible { opacity: 1; transform: scale(1); }
+
+    .reveal-delay-1 { transition-delay: 0.10s; }
+    .reveal-delay-2 { transition-delay: 0.22s; }
+    .reveal-delay-3 { transition-delay: 0.34s; }
+    .reveal-delay-4 { transition-delay: 0.46s; }
+    .reveal-delay-5 { transition-delay: 0.58s; }
+
+    @media (prefers-reduced-motion: reduce) {
+      .reveal, .reveal-left, .reveal-scale {
+        opacity: 1; transform: none; transition: none;
+      }
+    }
+
+    /* ─── BOTÕES ────────────────────────────────────────────── */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      font-family: var(--font-body);
+      font-size: 15px;
+      font-weight: 600;
+      border-radius: var(--radius-btn);
+      padding: 16px 28px;
+      cursor: pointer;
+      border: none;
+      transition:
+        transform 0.28s var(--ease-out),
+        box-shadow 0.28s var(--ease-out),
+        background 0.2s ease,
+        border-color 0.2s ease;
+      letter-spacing: -0.01em;
+      white-space: nowrap;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* shimmer */
+    .btn::after {
+      content: '';
+      position: absolute;
+      top: 0; left: -100%;
+      width: 60%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.18), transparent);
+      transition: left 0.5s ease;
+    }
+    .btn:hover::after { left: 160%; }
+    .btn:active { transform: scale(0.97) !important; }
+
+    .btn-primary {
+      background: var(--accent);
+      color: #fff;
+      box-shadow: var(--shadow-btn);
+    }
+    .btn-primary:hover {
+      background: var(--accent-dim);
+      transform: translateY(-3px);
+      box-shadow: 0 10px 36px rgba(34, 197, 94, 0.45);
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--primary);
+      border: 1.5px solid var(--border);
+    }
+    .btn-outline:hover {
+      border-color: var(--primary);
+      background: var(--surface);
+      transform: translateY(-3px);
+      box-shadow: 0 6px 20px rgba(15,23,42,0.08);
+    }
+
+    .btn-outline-white {
+      background: transparent;
+      color: #fff;
+      border: 1.5px solid rgba(255,255,255,0.3);
+    }
+    .btn-outline-white:hover {
+      background: rgba(255,255,255,0.1);
+      border-color: rgba(255,255,255,0.6);
+      transform: translateY(-3px);
+    }
+
+    .btn-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    /* ─── BADGE ─────────────────────────────────────────────── */
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      font-family: var(--font-body);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--accent);
+      background: rgba(34, 197, 94, 0.1);
+      border: 1px solid rgba(34, 197, 94, 0.28);
+      border-radius: 100px;
+      padding: 6px 14px;
+    }
+    .badge-dot {
+      width: 6px; height: 6px;
+      background: var(--accent);
+      border-radius: 50%;
+      animation: glowPulse 2.2s ease-in-out infinite;
+      flex-shrink: 0;
+    }
+
+    /* ─── IMAGE PLACEHOLDER ─────────────────────────────────── */
+    .img-placeholder {
+      border-radius: var(--radius-card);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      position: relative;
+      overflow: hidden;
+      user-select: none;
+    }
+
+    /* hero placeholder — fundo branco, bordas verdes */
+    .img-placeholder-hero {
+      background: rgba(34, 197, 94, 0.04);
+      border: 1.5px dashed rgba(34, 197, 94, 0.4);
+      color: rgba(34, 197, 94, 0.6);
+      aspect-ratio: 4/5;
+      min-height: 260px;
+    }
+
+    /* story placeholder — fundo azul, borda clara */
+    .img-placeholder-story {
+      background: rgba(255,255,255,0.06);
+      border: 1.5px dashed rgba(255,255,255,0.2);
+      color: rgba(255,255,255,0.35);
+      aspect-ratio: 16/9;
+      min-height: 200px;
+    }
+
+    /* cta placeholder — fundo claro */
+    .img-placeholder-cta {
+      background: var(--surface);
+      border: 1.5px dashed var(--border);
+      color: var(--muted);
+      aspect-ratio: 16/9;
+      min-height: 180px;
+    }
+
+    .img-placeholder svg { flex-shrink: 0; opacity: 0.7; }
+    .img-placeholder span { opacity: 0.8; }
+
+    .placeholder-corner {
+      position: absolute;
+      width: 16px; height: 16px;
+    }
+    .placeholder-corner.tl { top: 10px; left: 10px; border-top: 2px solid currentColor; border-left: 2px solid currentColor; border-radius: 3px 0 0 0; }
+    .placeholder-corner.tr { top: 10px; right: 10px; border-top: 2px solid currentColor; border-right: 2px solid currentColor; border-radius: 0 3px 0 0; }
+    .placeholder-corner.bl { bottom: 10px; left: 10px; border-bottom: 2px solid currentColor; border-left: 2px solid currentColor; border-radius: 0 0 0 3px; }
+    .placeholder-corner.br { bottom: 10px; right: 10px; border-bottom: 2px solid currentColor; border-right: 2px solid currentColor; border-radius: 0 0 3px 0; }
+
+
+    /* ═══════════════════════════════════════════════════════
+       SEÇÃO 1 — HERO  (fundo: BRANCO)
+    ═══════════════════════════════════════════════════════ */
+    #hero {
+      position: relative;
+      background: #FFFFFF;
+      min-height: 100svh;
+      display: flex;
+      align-items: center;
+      padding-block: 80px 72px;
+      overflow: hidden;
+    }
+
+    /* Grade verde sobre fundo branco */
+    .hero-grid {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(34, 197, 94, 0.09) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(34, 197, 94, 0.09) 1px, transparent 1px);
+      background-size: 52px 52px;
+      pointer-events: none;
+    }
+
+    /* Glow verde difuso */
+    .hero-glow-tl {
+      position: absolute;
+      top: -80px; left: -80px;
+      width: 480px; height: 480px;
+      background: radial-gradient(circle, rgba(34, 197, 94, 0.13) 0%, transparent 65%);
+      pointer-events: none;
+      animation: glowPulse 4s ease-in-out infinite;
+    }
+    .hero-glow-br {
+      position: absolute;
+      bottom: -100px; right: -80px;
+      width: 360px; height: 360px;
+      background: radial-gradient(circle, rgba(34, 197, 94, 0.08) 0%, transparent 65%);
+      pointer-events: none;
+      animation: glowPulse 5s ease-in-out infinite 1s;
+    }
+
+    /* "Bilhos" — linhas diagonais verdes */
+    .hero-lines {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      overflow: hidden;
+    }
+    .hero-lines::before {
+      content: '';
+      position: absolute;
+      top: 0; right: 15%;
+      width: 1.5px;
+      height: 100%;
+      background: linear-gradient(to bottom, transparent, rgba(34,197,94,0.25) 30%, rgba(34,197,94,0.12) 70%, transparent);
+    }
+    .hero-lines::after {
+      content: '';
+      position: absolute;
+      top: 0; right: 30%;
+      width: 1px;
+      height: 100%;
+      background: linear-gradient(to bottom, transparent, rgba(34,197,94,0.12) 40%, rgba(34,197,94,0.06) 70%, transparent);
+    }
+
+    .hero-inner {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+    }
+
+    /* Layout em 2 colunas no desktop */
+    .hero-layout {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 48px;
+      align-items: center;
+    }
+
+    .hero-badge-wrap { margin-bottom: 24px; }
+
+    .hero-title {
+      font-family: var(--font-head);
+      font-size: clamp(28px, 5.5vw, 50px);
+      font-weight: 800;
+      line-height: 1.12;
+      letter-spacing: -0.03em;
+      color: var(--primary);
+      margin-bottom: 22px;
+    }
+
+    .hero-title em {
+      font-style: normal;
+      background: linear-gradient(90deg, #22C55E, #4ADE80);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero-flag {
+      font-style: normal;
+      -webkit-text-fill-color: initial;
+      background: none;
+      display: inline;
+    }
+
+    .hero-subtitle {
+      font-size: clamp(15px, 2.2vw, 17px);
+      font-weight: 400;
+      line-height: 1.75;
+      color: var(--muted);
+      max-width: 540px;
+      margin-bottom: 14px;
+    }
+
+    .hero-support {
+      font-size: 14px;
+      font-weight: 500;
+      color: rgba(15,23,42,0.4);
+      margin-bottom: 36px;
+    }
+
+    .hero-ctas { margin-bottom: 44px; }
+
+    .hero-microcopy {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      color: var(--muted);
+      font-weight: 500;
+    }
+    .hero-microcopy svg { flex-shrink: 0; color: var(--accent); }
+
+    /* Stats strip */
+    .hero-stats {
+      display: flex;
+      gap: 0;
+      margin-top: 52px;
+      border-top: 1px solid var(--border);
+      padding-top: 28px;
+    }
+    .stat-item {
+      flex: 1;
+      padding-inline: 12px;
+      border-right: 1px solid var(--border);
+    }
+    .stat-item:first-child { padding-left: 0; }
+    .stat-item:last-child { border-right: none; }
+
+    .stat-number {
+      font-family: var(--font-head);
+      font-size: 22px;
+      font-weight: 800;
+      color: var(--primary);
+      letter-spacing: -0.03em;
+      line-height: 1;
+      margin-bottom: 5px;
+    }
+    .stat-number span { color: var(--accent); }
+
+    .stat-label {
+      font-size: 11px;
+      font-weight: 500;
+      color: var(--muted);
+      line-height: 1.45;
+    }
+
+    /* Placeholder hero (coluna direita desktop / abaixo mobile) */
+    .hero-image-col {
+      width: 100%;
+    }
+
+    /* ─── STORY LAYOUT (2 colunas: imagem ESQ | texto DIR) ── */
+    .story-layout {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 48px;
+      align-items: stretch;
+      margin-bottom: 52px;
+    }
+
+    /* imagem ocupa toda a altura do bloco de texto */
+    .story-image-col .img-placeholder-story {
+      height: 100%;
+      min-height: 320px;
+      aspect-ratio: unset;
+    }
+
+    /* ─── CTA LAYOUT (2 colunas: texto ESQ | imagem DIR) ─── */
+    .cta-layout {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 48px;
+      align-items: stretch;
+      margin-bottom: 44px;
+    }
+
+    .cta-image-col .img-placeholder-cta {
+      height: 100%;
+      min-height: 280px;
+      aspect-ratio: unset;
+    }
+
+
+    /* ═══════════════════════════════════════════════════════
+       SEÇÃO 2 — HISTÓRIA  (fundo: AZUL)
+    ═══════════════════════════════════════════════════════ */
+    #story {
+      background: var(--secondary);
+      padding-block: 92px 84px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* padrão de pontos sutil */
+    #story::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: radial-gradient(rgba(255,255,255,0.04) 1px, transparent 1px);
+      background-size: 28px 28px;
+      pointer-events: none;
+    }
+
+    /* glow azul claro no canto */
+    #story::after {
+      content: '';
+      position: absolute;
+      top: -60px; right: -60px;
+      width: 340px; height: 340px;
+      background: radial-gradient(circle, rgba(34,197,94,0.08) 0%, transparent 65%);
+      pointer-events: none;
+    }
+
+    .story-inner { position: relative; z-index: 1; }
+
+    .section-eyebrow {
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 16px;
+    }
+
+    .section-title {
+      font-family: var(--font-head);
+      font-size: clamp(24px, 4.5vw, 38px);
+      font-weight: 800;
+      line-height: 1.2;
+      letter-spacing: -0.03em;
+      color: #fff;
+      margin-bottom: 24px;
+    }
+
+    .story-text {
+      font-size: 16px;
+      line-height: 1.85;
+      color: rgba(255,255,255,0.65);
+      margin-bottom: 18px;
+    }
+    .story-text strong { color: rgba(255,255,255,0.92); font-weight: 600; }
+    .story-text:last-of-type { margin-bottom: 0; }
+
+    .story-text-block { margin-bottom: 44px; }
+
+    /* Placeholder de imagem na seção 2 */
+    .story-image-wrap { margin-bottom: 52px; }
+
+    /* divider */
+    .divider-line {
+      height: 3px;
+      background: linear-gradient(90deg, var(--accent), transparent);
+      border-radius: 4px;
+      margin-bottom: 52px;
+      animation: growLine 0.8s var(--ease-out) both;
+      width: 40px; /* override pela animação */
+    }
+    .divider-line.visible { animation: growLine 0.8s var(--ease-out) both; }
+
+    /* Cards — sobre azul */
+    .cards-grid {
+      display: grid;
+      gap: 14px;
+    }
+
+    .card {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: var(--radius-card);
+      padding: 26px 28px;
+      transition: transform 0.32s var(--ease-out), box-shadow 0.32s var(--ease-out), border-color 0.32s ease, background 0.32s ease;
+      cursor: default;
+      backdrop-filter: blur(4px);
+    }
+    .card:hover {
+      transform: translateY(-4px);
+      background: rgba(255,255,255,0.1);
+      border-color: rgba(34, 197, 94, 0.4);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+    }
+
+    .card-icon {
+      width: 40px; height: 40px;
+      background: rgba(34, 197, 94, 0.15);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 16px;
+    }
+    .card-icon svg { color: var(--accent); }
+
+    .card-title {
+      font-family: var(--font-head);
+      font-size: 15px;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 7px;
+      letter-spacing: -0.01em;
+    }
+
+    .card-desc {
+      font-size: 14px;
+      line-height: 1.65;
+      color: rgba(255,255,255,0.55);
+    }
+
+
+    /* ═══════════════════════════════════════════════════════
+       SEÇÃO 3 — CTA FINAL  (fundo: BRANCO)
+    ═══════════════════════════════════════════════════════ */
+    #cta {
+      background: #FFFFFF;
+      padding-block: 92px 84px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* grade verde suave igual ao hero */
+    .cta-grid {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(34, 197, 94, 0.06) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(34, 197, 94, 0.06) 1px, transparent 1px);
+      background-size: 52px 52px;
+      pointer-events: none;
+    }
+
+    .cta-glow {
+      position: absolute;
+      bottom: -80px; right: -60px;
+      width: 400px; height: 400px;
+      background: radial-gradient(circle, rgba(34, 197, 94, 0.1) 0%, transparent 65%);
+      pointer-events: none;
+      animation: glowPulse 5s ease-in-out infinite;
+    }
+
+    .cta-inner { position: relative; z-index: 1; }
+
+    .cta-eyebrow {
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 16px;
+    }
+
+    .cta-title {
+      font-family: var(--font-head);
+      font-size: clamp(26px, 5vw, 42px);
+      font-weight: 800;
+      line-height: 1.14;
+      letter-spacing: -0.03em;
+      color: var(--primary);
+      margin-bottom: 20px;
+    }
+
+    .cta-text {
+      font-size: 16px;
+      line-height: 1.75;
+      color: var(--muted);
+      margin-bottom: 36px;
+    }
+
+    /* Placeholder de imagem na seção 3 */
+    .cta-image-wrap { margin-bottom: 44px; }
+
+    .benefits-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-bottom: 44px;
+    }
+
+    .benefits-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      font-size: 15px;
+      color: var(--text);
+      line-height: 1.55;
+    }
+
+    .benefit-check {
+      flex-shrink: 0;
+      width: 20px; height: 20px;
+      background: rgba(34, 197, 94, 0.12);
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 2px;
+    }
+
+    .cta-buttons { margin-bottom: 36px; }
+
+    .cta-tagline {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--muted);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    /* ─── FOOTER ────────────────────────────────────────────── */
+    footer {
+      background: var(--primary);
+      padding-block: 24px;
+      text-align: center;
+    }
+    .footer-text {
+      font-size: 13px;
+      color: rgba(255,255,255,0.28);
+    }
+
+
+    /* ─── RESPONSIVIDADE ────────────────────────────────────── */
+    @media (max-width: 420px) {
+      .btn { font-size: 14px; padding: 14px 20px; }
+      .btn-group { flex-direction: column; }
+      .btn-group .btn { width: 100%; }
+      .container { padding-inline: 20px; }
+    }
+
+    @media (min-width: 600px) {
+      .cards-grid { grid-template-columns: 1fr 1fr; }
+      .cards-grid .card:last-child { grid-column: 1 / -1; }
+    }
+
+    /* Breakpoint principal: 2 colunas em todas as seções */
+    @media (min-width: 768px) {
+      /* Hero: texto ESQ | imagem DIR */
+      .hero-layout {
+        grid-template-columns: 1fr 380px;
+        gap: 64px;
+      }
+
+      /* Story: imagem ESQ | texto DIR */
+      .story-layout {
+        grid-template-columns: 420px 1fr;
+        gap: 64px;
+      }
+
+      /* CTA: texto ESQ | imagem DIR */
+      .cta-layout {
+        grid-template-columns: 1fr 420px;
+        gap: 64px;
+      }
+    }
+
+    @media (min-width: 1024px) {
+      .hero-layout  { grid-template-columns: 1fr 440px; gap: 80px; }
+      .story-layout { grid-template-columns: 460px 1fr; gap: 80px; }
+      .cta-layout   { grid-template-columns: 1fr 460px; gap: 80px; }
+      .cards-grid   { grid-template-columns: repeat(3, 1fr); }
+      .cards-grid .card:last-child { grid-column: auto; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ═══════════════════════════════════════════
+       SEÇÃO 1 — HERO  |  fundo: BRANCO
+  ═══════════════════════════════════════════ -->
+  <section id="hero" aria-label="Apresentação">
+    <div class="hero-grid"></div>
+    <div class="hero-glow-tl"></div>
+    <div class="hero-glow-br"></div>
+    <div class="hero-lines"></div>
+
+    <div class="container">
+      <div class="hero-inner">
+        <div class="hero-layout">
+
+          <!-- Coluna de texto -->
+          <div class="hero-text-col">
+
+            <div class="hero-badge-wrap reveal">
+              <span class="badge">
+                <span class="badge-dot"></span>
+                Professor de Inglês
+              </span>
+            </div>
+
+            <h1 class="hero-title reveal reveal-delay-1">
+              <span class="hero-flag">🗺️</span>
+              Destrave seu inglês com um professor que <em>viveu o processo</em> e ensina com propósito
+            </h1>
+
+            <p class="hero-subtitle reveal reveal-delay-2">
+              Aprenda de forma prática, personalizada e com acompanhamento real para desenvolver sua comunicação, ganhar confiança e usar o inglês em objetivos que realmente importam para você.
+            </p>
+
+            <p class="hero-support reveal reveal-delay-3">
+              Aulas particulares para quem quer evoluir com direção, constância e aplicação prática.
+            </p>
+
+            <div class="hero-ctas btn-group reveal reveal-delay-3">
+              <a href="https://wa.me/5512992067411?text=Ol%C3%A1%2C+Vinicius%21+%F0%9F%91%8B+Vi+seu+site+e+quero+come%C3%A7ar+minhas+aulas+de+ingl%C3%AAs.+Pode+me+contar+como+funciona%3F" class="btn btn-primary" target="_blank" rel="noopener">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.68A2 2 0 012 1h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 8.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+                Quero começar
+              </a>
+              <a href="https://wa.me/5512992067411?text=Ol%C3%A1%2C+Vinicius%21+%F0%9F%91%8B+Vi+seu+site+e+quero+come%C3%A7ar+minhas+aulas+de+ingl%C3%AAs.+Pode+me+contar+como+funciona%3F" class="btn btn-outline" target="_blank" rel="noopener">
+                Falar no WhatsApp
+              </a>
+            </div>
+
+            <p class="hero-microcopy reveal reveal-delay-4">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+              Aulas adaptadas ao seu nível, sua rotina e sua meta.
+            </p>
+
+            <!-- Stats strip -->
+            <div class="hero-stats reveal reveal-delay-5">
+              <div class="stat-item">
+                <div class="stat-number"><span>+</span>5</div>
+                <div class="stat-label">Anos de experiência com ensino</div>
+              </div>
+              <div class="stat-item">
+                <div class="stat-number">Nível<span> C</span></div>
+                <div class="stat-label">Inglês avançado certificado</div>
+              </div>
+              <div class="stat-item">
+                <div class="stat-number"><span>100</span>%</div>
+                <div class="stat-label">Aulas personalizadas</div>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Coluna da imagem (desktop) / abaixo do texto (mobile) -->
+          <div class="hero-image-col reveal-scale reveal-delay-2">
+            <img src="hero.webp" alt="Foto do professor Vinicius" style="width:100%;height:100%;object-fit:cover;object-position:top;border-radius:var(--radius-card);" />
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════════════
+       SEÇÃO 2 — HISTÓRIA  |  fundo: AZUL
+  ═══════════════════════════════════════════ -->
+  <section id="story" aria-label="Sobre Vinicius">
+    <div class="container">
+      <div class="story-inner">
+
+        <!-- Grade 2 colunas: imagem ESQ | texto DIR -->
+        <div class="story-layout">
+
+          <!-- Coluna esquerda: imagem -->
+          <div class="story-image-col reveal-scale">
+            <img src="foto2.webp" alt="Foto de Vinicius em contexto profissional" style="width:100%;height:100%;object-fit:cover;object-position:top;border-radius:var(--radius-card);" />
+          </div>
+
+          <!-- Coluna direita: texto -->
+          <div class="story-text-col">
+            <p class="section-eyebrow reveal">Sobre Vinicius</p>
+            <h2 class="section-title reveal reveal-delay-1">
+              Mais do que ensinar inglês, Vinicius construiu uma jornada com ele
+            </h2>
+            <div class="story-text-block">
+              <p class="story-text reveal reveal-delay-2">
+                Depois da graduação em Letras, Vinicius percebeu que ainda não tinha uma <strong>base sólida de fala</strong>. Esse incômodo virou decisão. A partir dali, passou a se dedicar com seriedade ao idioma, buscando desenvolver não apenas conhecimento teórico, mas domínio real.
+              </p>
+              <p class="story-text reveal reveal-delay-3">
+                Com o tempo, vieram as aulas online, os projetos educacionais, a atuação em escola e a experiência como <strong>Professor de Inglês na EsPCEx</strong>, no Exército — onde atuou como Aspirante a Oficial e 2º Tenente. Hoje, essa trajetória sustenta um ensino que une prática, clareza e propósito.
+              </p>
+              <p class="story-text reveal reveal-delay-4">
+                Aqui, o inglês não é tratado como enfeite curricular. Ele é trabalhado como <strong>ferramenta de crescimento, oportunidade e transformação</strong>.
+              </p>
+            </div>
+          </div>
+
+        </div><!-- /story-layout -->
+
+        <div class="divider-line reveal"></div>
+
+        <div class="cards-grid">
+
+          <div class="card reveal reveal-delay-1">
+            <div class="card-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            </div>
+            <p class="card-title">Experiência real com ensino</p>
+            <p class="card-desc">Atuação com aulas particulares, online, presenciais e ensino institucional.</p>
+          </div>
+
+          <div class="card reveal reveal-delay-2">
+            <div class="card-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>
+            </div>
+            <p class="card-title">Inglês aplicado à vida real</p>
+            <p class="card-desc">Aprendizado com foco em comunicação, confiança e uso prático do idioma.</p>
+          </div>
+
+          <div class="card reveal reveal-delay-3">
+            <div class="card-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>
+            </div>
+            <p class="card-title">Acompanhamento personalizado</p>
+            <p class="card-desc">Cada aluno evolui com base no seu nível, sua rotina e seus objetivos.</p>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════════════
+       SEÇÃO 3 — CTA FINAL  |  fundo: BRANCO
+  ═══════════════════════════════════════════ -->
+  <section id="cta" aria-label="Próximo passo">
+    <div class="cta-grid"></div>
+    <div class="cta-glow"></div>
+
+    <div class="container">
+      <div class="cta-inner">
+
+        <!-- Grade 2 colunas: texto ESQ | imagem DIR -->
+        <div class="cta-layout">
+
+          <!-- Coluna esquerda: texto + benefícios + botões -->
+          <div class="cta-text-col">
+            <p class="cta-eyebrow reveal">Dê o próximo passo</p>
+
+            <h2 class="cta-title reveal reveal-delay-1">
+              O próximo passo no seu inglês pode começar agora
+            </h2>
+
+            <p class="cta-text reveal reveal-delay-2">
+              Se você está cansado de estudar sem conseguir usar o idioma com segurança, fale agora e comece com um direcionamento mais claro, humano e estratégico.
+            </p>
+
+            <ul class="benefits-list reveal reveal-delay-3" aria-label="Benefícios">
+          <li>
+            <span class="benefit-check" aria-hidden="true">
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#22C55E" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            </span>
+            Aulas personalizadas
+          </li>
+          <li>
+            <span class="benefit-check" aria-hidden="true">
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#22C55E" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            </span>
+            Foco em conversação e evolução real
+          </li>
+          <li>
+            <span class="benefit-check" aria-hidden="true">
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#22C55E" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            </span>
+            Direcionamento conforme seu objetivo
+          </li>
+          <li>
+            <span class="benefit-check" aria-hidden="true">
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#22C55E" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            </span>
+            Mais confiança para usar o inglês
+          </li>
+          <li>
+            <span class="benefit-check" aria-hidden="true">
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#22C55E" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            </span>
+            Aprendizado com método e constância
+          </li>
+        </ul>
+
+            <div class="cta-buttons btn-group reveal reveal-delay-4">
+              <a href="https://wa.me/5512992067411?text=Ol%C3%A1%2C+Vinicius%21+%F0%9F%91%8B+Vi+seu+site+e+quero+come%C3%A7ar+minhas+aulas+de+ingl%C3%AAs.+Pode+me+contar+como+funciona%3F" class="btn btn-primary" target="_blank" rel="noopener">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                Agendar contato
+              </a>
+              <a href="https://wa.me/5512992067411?text=Ol%C3%A1%2C+Vinicius%21+%F0%9F%91%8B+Vi+seu+site+e+quero+come%C3%A7ar+minhas+aulas+de+ingl%C3%AAs.+Pode+me+contar+como+funciona%3F" class="btn btn-outline" target="_blank" rel="noopener">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.68A2 2 0 012 1h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 8.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+                Chamar no WhatsApp
+              </a>
+            </div>
+
+            <p class="cta-tagline reveal">Inglês com propósito, prática e direção.</p>
+
+          </div><!-- /cta-text-col -->
+
+          <!-- Coluna direita: imagem -->
+          <div class="cta-image-col reveal-scale reveal-delay-2">
+            <img src="aula.webp" alt="Aluna estudando inglês online" style="width:100%;height:100%;object-fit:cover;object-position:top;border-radius:var(--radius-card);" />
+          </div><!-- /cta-image-col -->
+
+        </div><!-- /cta-layout -->
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════════════
+       FOOTER
+  ═══════════════════════════════════════ -->
+  <footer>
+    <div class="container">
+      <p class="footer-text">
+        &copy; 2025 Vinicius &mdash; Professor de Inglês. Todos os direitos reservados.
+      </p>
+    </div>
+  </footer>
+
+
+  <!-- ═══════════════════════════════════════════
+       JAVASCRIPT — Scroll Reveal
+  ═══════════════════════════════════════ -->
+  <script>
+    (function () {
+      'use strict';
+
+      const CLASSES = ['.reveal', '.reveal-left', '.reveal-scale'];
+      const heroSelector = '#hero .reveal, #hero .reveal-left, #hero .reveal-scale';
+
+      // Anima hero imediatamente (above the fold)
+      document.querySelectorAll(heroSelector).forEach((el, i) => {
+        // pequeno stagger manual para hero
+        setTimeout(() => el.classList.add('visible'), i * 80);
+      });
+
+      // Observer para o restante
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('visible');
+              observer.unobserve(entry.target);
+            }
+          });
+        },
+        { threshold: 0.1, rootMargin: '0px 0px -48px 0px' }
+      );
+
+      const allReveal = document.querySelectorAll(CLASSES.join(', '));
+      allReveal.forEach(el => {
+        if (!el.closest('#hero')) observer.observe(el);
+      });
+    })();
+  </script>
+
+</body>
+</html>
